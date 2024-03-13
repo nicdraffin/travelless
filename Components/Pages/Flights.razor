@@ -1,6 +1,25 @@
 ﻿@page "/Flights"
 
-<h1>Flight Finder</h1>
+
+<h5 style="text-align:center">Flight Finder</h5>
+
+<div style="display:flex; flex-direction: row;">
+     <div style="flex:1;">
+        <label for="form_option">From:</label><br />
+    </div>
+</div>
+<label for="from">From:</label>
+<select name="Any" id="from">
+</select>
+<label for="to">To:</label>
+<select name="Any" id="to">
+</select>
+<label for="day">Day:</label>
+<select name="Any" id="day">
+</select>
+<button type="button">Find flights</button>
+
+
 
 <p role="status">Current count: @currentCount</p>
 
