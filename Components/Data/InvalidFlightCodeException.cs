@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace travelless.Components.Data
 {
-    internal class InvalidCitizen
+    internal class InvalidFlightCodeException
     {
     }
 }
