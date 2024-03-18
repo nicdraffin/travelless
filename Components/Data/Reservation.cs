@@ -19,7 +19,7 @@ namespace travelless.Components.Data
 
         public override string ToString()
         {
-            return $"{ReservationCode} - {TravellerName}/{Citizenship} - {FlightCode} - Active: {FlightStatus}";
+            return $"{ReservationCode} - {TravellerName} - {FlightCode} - Active: {FlightStatus}";
         }
 
     }

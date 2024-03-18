@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace travelless.Components.Data
 {
-    internal class InvalidFlightCodeException
+    public class InvalidFlightCodeException : Exception
     {
+        public InvalidFlightCodeException() : base("Invalid flight code provided") { }
+        public InvalidFlightCodeException(string message) : base(message) { }
+        public InvalidFlightCodeException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

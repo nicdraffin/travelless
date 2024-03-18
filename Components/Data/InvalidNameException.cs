@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace travelless.Components.Data
 {
-    internal class InvalidNameException
+    public class InvalidNameException : Exception
     {
+        public InvalidNameException() : base("Invalid name provided") { }
+        public InvalidNameException(string message) : base(message) { }
+        public InvalidNameException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

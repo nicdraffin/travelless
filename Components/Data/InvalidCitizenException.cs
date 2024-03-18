@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace travelless.Components.Data
 {
-    internal class InvalidCitizenException
+    public class InvalidCitizenshipException : Exception
     {
+        public InvalidCitizenshipException() : base("Invalid citizenship provided") { }
+        public InvalidCitizenshipException(string message) : base(message) { }
+        public InvalidCitizenshipException(string message, Exception innerException) : base(message, innerException) { }
     }
 }
