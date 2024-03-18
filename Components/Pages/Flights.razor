@@ -4,9 +4,40 @@
 
 <div class="Flight_Finder">
     <label for="originAirport">From:</label>
-    <input type="text" id="originAirport" @bind="originAirport" placeholder="Any" />
+    <input type="text" id="originAirport" @bind="OriginAirport" placeholder="Any" />
 </div>
 
+@code {
+    public string OriginAirport
+    {
+        return 
+    }
+}
+
+
+
+@page "/flightsearch"
+
+<h3>Flight Search</h3>
+
+<div class="form-group">
+    <label for="searchFlightNumber">Enter Flight Number:</label>
+    <input type="text" id="searchFlightNumber" class="form-control" @bind="searchFlightNumber" />
+</div>
+
+<button class="btn btn-primary" @onclick="SearchFlight">Search</button>
+
+@if (foundFlight != null)
+{
+    <div class="mt-3">
+        <h4>Found Flight:</h4>
+        <p>Flight Number: @foundFlight.FlightNumber</p>
+        <p>Origin: @foundFlight.Origin</p>
+        <p>Destination: @foundFlight.Destination</p>
+        <p>Departure Time: @foundFlight.DepartureTime.ToString("yyyy-MM-dd HH:mm")</p>
+        <!-- Add other flight properties as needed -->
+    </div>
+}
 <div class="Flight_Finder">
     <label for="destinationAirport">To:</label>
     <input type="text" id="destinationAirport" @bind="destinationAirport" placeholder="Any" />
@@ -79,6 +110,10 @@ else
     <input type="text" id="Citizenship" @bind="Citizenship" placeholder="Citizenship" />
 </div>
 
+@code {
+    private string Citizenship { get; set; }
+}
+
 <button @onclick="Reserve">Reserve</button>
 
 
@@ -120,7 +155,12 @@ else
 
 
 @code {
-    //private string originAirport;
+    private originairport {get; set;}
+}
+
+
+
+ /* //private string originAirport;
     //private string destinationAirport;
     //private string dayOfWeek;
     //private List<Flight> flights;
@@ -138,5 +178,5 @@ else
         // public string FlightNumber { get; set; }
         // public string DepartureTime { get; set; }
         // public string ArrivalTime { get; set; }
-    }
-}
+    } */
+    
