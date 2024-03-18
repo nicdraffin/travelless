@@ -1,35 +1,142 @@
-﻿@page "/Flights"
+﻿@page "/flights"
 
+<h3>Find Flights</h3>
 
-<h5 style="text-align:center">Flight Finder</h5>
-
-<div style="display:flex; flex-direction: row;">
-     <div style="flex:1;">
-        <label for="form_option">From:</label><br />
-    </div>
+<div class="Flight_Finder">
+    <label for="originAirport">From:</label>
+    <input type="text" id="originAirport" @bind="originAirport" placeholder="Any" />
 </div>
-<label for="from">From:</label>
-<select name="Any" id="from">
-</select>
-<label for="to">To:</label>
-<select name="Any" id="to">
-</select>
-<label for="day">Day:</label>
-<select name="Any" id="day">
-</select>
-<button type="button">Find flights</button>
+
+<div class="Flight_Finder">
+    <label for="destinationAirport">To:</label>
+    <input type="text" id="destinationAirport" @bind="destinationAirport" placeholder="Any" />
+</div>
+
+<div class="Flight_Finder">
+    <label for="dayOfWeek">Day of Week:</label>
+    <input type="text" id="dayOfWeek" @bind="dayOfWeek" placeholder="Any" />
+</div>
+
+<button @onclick="FindFlights">Search Flights</button>
+
+<h3>Flights</h3>
+
+@if (flights != null && flights.Count > 0)
+{
+    <h4>Matching Flights:</h4>
+    <ul>
+        @foreach (var flight in flights)
+        {
+            <li>@flight.FlightNumber - @flight.DepartureTime to @flight.ArrivalTime</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No matching flights found.</p>
+}
+
+<h3>Reserve</h3>
+
+
+<div class="Reserve">
+    <label for="FlightCode">Flight code:</label>
+    <input type="text" id="FlightCode" @bind="FlightCode" placeholder="Flight" />
+</div>
+
+<div class="Reserve">
+    <label for="Airline">Airline:</label>
+    <input type="text" id="Airline" @bind="Airline" placeholder="Airline" />
+</div>
+
+
+<div class="Reserve">
+    <label for="Day">Day:</label>
+    <input type="text" id="Day" @bind="Day" placeholder="Day" />
+</div>
+
+
+<div class="Reserve">
+    <label for="Time">Time:</label>
+    <input type="text" id="Time" @bind="Time" placeholder="Time" />
+</div>
+
+
+<div class="Reserve">
+    <label for="Cost">Cost:</label>
+    <input type="text" id="Cost" @bind="Cost" placeholder="0" />
+</div>
+
+
+<div class="Reserve">
+    <label for="Name">Name:</label>
+    <input type="text" id="Name" @bind="Name" placeholder="Name" />
+</div>
+
+
+<div class="Reserve">
+    <label for="Citizenship">Citizenship:</label>
+    <input type="text" id="Citizenship" @bind="Citizenship" placeholder="Citizenship" />
+</div>
+
+<button @onclick="Reserve">Reserve</button>
+
+
+@if (flights != null && flights.Count > 0)
+{
+    <h4>Matching Flights:</h4>
+    <ul>
+        @foreach (var flight in flights)
+        {
+            <li>@flight.FlightNumber - @flight.DepartureTime to @flight.ArrivalTime</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No matching flights found.</p>
+}
+
+<h3>Search</h3>
 
 
 
-<p role="status">Current count: @currentCount</p>
+<div class="Search">
+    <label for="Code">Code:</label>
+    <input type="text" id="Code" @bind="Code" />
+</div>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<div class="Search">
+    <label for="Airline">Airline:</label>
+    <input type="text" id="Airline" @bind="Airline" />
+</div>
+
+<div class="Search">
+    <label for="Name">Name:</label>
+    <input type="text" id="Name" @bind="Name" />
+</div>
+
+
+
 
 @code {
-    private int currentCount = 0;
+    //private string originAirport;
+    //private string destinationAirport;
+    //private string dayOfWeek;
+    //private List<Flight> flights;
 
-    private void IncrementCount()
+    //private void FindFlights()
+    //{
+    // Call the findFlights method here with the input parameters
+    // Example:
+    // flights = findFlights(originAirport, destinationAirport, dayOfWeek);
+    // Note: You'll need to replace 'findFlights' with the actual method call or API request in your code
+    //}
+
+    public class Flight
     {
-        currentCount++;
+        // public string FlightNumber { get; set; }
+        // public string DepartureTime { get; set; }
+        // public string ArrivalTime { get; set; }
     }
 }

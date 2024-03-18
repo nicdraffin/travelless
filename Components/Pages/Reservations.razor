@@ -1,7 +1,48 @@
 ﻿@page "/Reservations"
+<!-- Aligned the text to the center -->
+<h3 style="text-align:center">Reservations</h3>
 
-<h3>Reservations</h3>
+<!-- CSS styling -->
+<div style="display:flex; flex-direction: row;">
+    <div style="flex:1;"></div>
+</div>
+
+<label for="flight code">Flight code:</label>
+<select name="Flight" id="flight code"></select>
+
+<label for="airline">Airline:</label>
+<select name="Airline" id="airline"></select>
+
+<label for="day">Day:</label>
+<select name="Day" id="day"></select>
+
+<label for="time">Time:</label>
+<select name="Time" id="time"></select>
+
+<label for="cost">Cost:</label>
+<select name="0" id="cost"></select>
+
+<label for="name">Name:</label>
+<select name="Name" id="name"></select>
+
+<label for="citizenship">Citizenship:</label>
+<select name="Citizenship" id="citizenship"></select>
+
+<button type="button">Reserve</button>
 
 @code {
+    class Make
+    {
+        static void makeReservation(int flightCode, string name, string citizenship) //Created the basic foundation of the make reservation method with the appropriate input arguments
+        {
 
+        }
+    }
+
+    class Find
+    {
+        static void findReservation(int flightCode, string airline, string name) //Here is the basic foundation of the find reservation method with the user inputs
+        {
+        }
+    }
 }
