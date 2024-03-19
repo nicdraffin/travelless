@@ -10,6 +10,18 @@ namespace travelless.Components.Data
 {
     public class Flights
     {
+        public Flights(string flightCode, string airlineName, string fromAirport, string toAirport, string day, string deptartureTime, int passengerseatsavaliable, double costMoney)
+        {
+            FlightCode = flightCode;
+            AirlineName = airlineName;
+            FromAirport = fromAirport;
+            ToAirport = toAirport;
+            Day = day;
+            DeptartureTime = deptartureTime;
+            Passengerseatsavaliable = passengerseatsavaliable;
+            CostMoney1 = costMoney;
+        }
+
         public string Flightnumber { get; set; }
         public string AirlineName { get; set; }
         public string FromOrigin { get; set; }
@@ -18,6 +30,12 @@ namespace travelless.Components.Data
         public string DeptartureTime { get; set; }
         public string SeatPassenger { get; set; }
         public string CostMoney { get; set; }
+        public string FlightCode { get; }
+        public string FromAirport { get; }
+        public string ToAirport { get; }
+        public string Day { get; }
+        public int Passengerseatsavaliable { get; }
+        public double CostMoney1 { get; }
 
         public override string ToString()
         {

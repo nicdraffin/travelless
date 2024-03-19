@@ -1,182 +1,230 @@
-﻿@page "/flights"
+﻿@page "/Flights"
+@using static travelless.Components.Data.ReservationManager
+@using travelless.Components.Data
+@using System.Reflection.Metadata
 
 <h3>Find Flights</h3>
 
-<div class="Flight_Finder">
-    <label for="originAirport">From:</label>
-    <input type="text" id="originAirport" @bind="OriginAirport" placeholder="Any" />
+<div class="Flight_Finder" style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <select @bind="SelectedFrom">
+        <option>Select</option>
+        <option value="YYC">YYC</option>
+        <option value="YEG">YEG</option>
+        <option value="YUL">YUL</option>
+        <option value="YOW">YOW</option>
+        <option value="YYZ">YYZ</option>
+        <option value="YVR">YVR</option>
+        <option value="YWG">YWG</option>
+        <option value="ATL">ATL</option>
+        <option value="PEK">PEK</option>
+        <option value="DXB">DXB</option>
+        <option value="HKG">HKG</option>
+        <option value="LHR">LHR</option>
+        <option value="HND">HND</option>
+        <option value="ORD">ORD</option>
+        <option value="PVG">PVG</option>
+        <option value="CDG">CDG</option>
+        <option value="AMS">AMS</option>
+        <option value="DEL">DEL</option>
+        <option value="FRA">FRA</option>
+        <option value="DFW">DFW</option>
+    </select>
+</div>
+<div class="Flight_Finder" style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <select @bind="SelectedTo">
+        <option>Select</option>
+        <option value="YYC">YYC</option>
+        <option value="YEG">YEG</option>
+        <option value="YUL">YUL</option>
+        <option value="YOW">YOW</option>
+        <option value="YYZ">YYZ</option>
+        <option value="YVR">YVR</option>
+        <option value="YWG">YWG</option>
+        <option value="ATL">ATL</option>
+        <option value="PEK">PEK</option>
+        <option value="DXB">DXB</option>
+        <option value="HKG">HKG</option>
+        <option value="LHR">LHR</option>
+        <option value="HND">HND</option>
+        <option value="ORD">ORD</option>
+        <option value="PVG">PVG</option>
+        <option value="CDG">CDG</option>
+        <option value="AMS">AMS</option>
+        <option value="DEL">DEL</option>
+        <option value="FRA">FRA</option>
+        <option value="DFW">DFW</option>
+    </select>
+</div>
+<div class="Flight_Finder" style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <select @bind="SelectedDay">
+        <option>Select</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+    </select>
 </div>
 
+<button class="Flight_Finder" @onclick="FindFlights" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Find Flights</button>
+
+<h3>Flights</h3>
+
+<div class="found_flight" style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <select @bind="SelectedOption" >
+        <option>Select</option>
+        @foreach (var flight in flightsList)
+        {
+            <option value="@flight" >@flight</option>
+        }
+    </select>
+</div>
+
+<button class="found_flight" @onclick="auto" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Book</button>
+
+
+
+
 @code {
-    public string OriginAirport
+    private List<string> flightsList = new List<string>();
+    private string SelectedFrom;
+    private string SelectedTo;
+    private string SelectedDay;
+    private string SelectedOption;
+
+    private string flightCode;
+    private string airline;
+    private string Day;
+    private string Time;
+    private string Cost;
+
+    private void FindFlights()
     {
-        return 
+        // Implement FlightManager to search for flights based on SelectedTo, SelectedFrom, SelectedDay
+        FlightManager flightManager = new FlightManager();
+        flightsList = flightManager.Search(SelectedTo, SelectedFrom, SelectedDay);
+    }
+
+    private void Reserve()
+    {
+        // Implement reservation logic using the selected flight details and passenger information
+        // For example:
+        // reservationManager.ReserveFlight(flightCode, airline, Day, Time, Cost, passengerName, passengerCitizenship);
+    }
+
+    private void auto()
+    {
+        var selectedValues = SelectedOption.Split(',');
+
+        flightCode = selectedValues[0];
+        airline = selectedValues[1];
+        Day = selectedValues[2];
+        Time = selectedValues[3];
+        Cost = selectedValues[4];
+    }
+    private List<PassengerInfo> reservationsList = new List<PassengerInfo>();
+
+    private PassengerInfo passengerInfo = new PassengerInfo();
+
+    private void ReserveFlight()
+    {
+        
+        passengerInfo.FlightCode = flightCode;
+        passengerInfo.Airline = airline;
+        passengerInfo.Day = Day;
+        passengerInfo.Time = Time;
+        passengerInfo.Cost = Cost;
+
+        reservationsList.Add(passengerInfo);
+
+     
     }
 }
 
 
 
-@page "/flightsearch"
-
-<h3>Flight Search</h3>
-
-<div class="form-group">
-    <label for="searchFlightNumber">Enter Flight Number:</label>
-    <input type="text" id="searchFlightNumber" class="form-control" @bind="searchFlightNumber" />
-</div>
-
-<button class="btn btn-primary" @onclick="SearchFlight">Search</button>
-
-@if (foundFlight != null)
-{
-    <div class="mt-3">
-        <h4>Found Flight:</h4>
-        <p>Flight Number: @foundFlight.FlightNumber</p>
-        <p>Origin: @foundFlight.Origin</p>
-        <p>Destination: @foundFlight.Destination</p>
-        <p>Departure Time: @foundFlight.DepartureTime.ToString("yyyy-MM-dd HH:mm")</p>
-        <!-- Add other flight properties as needed -->
-    </div>
-}
-<div class="Flight_Finder">
-    <label for="destinationAirport">To:</label>
-    <input type="text" id="destinationAirport" @bind="destinationAirport" placeholder="Any" />
-</div>
-
-<div class="Flight_Finder">
-    <label for="dayOfWeek">Day of Week:</label>
-    <input type="text" id="dayOfWeek" @bind="dayOfWeek" placeholder="Any" />
-</div>
-
-<button @onclick="FindFlights">Search Flights</button>
-
-<h3>Flights</h3>
-
-@if (flights != null && flights.Count > 0)
-{
-    <h4>Matching Flights:</h4>
-    <ul>
-        @foreach (var flight in flights)
-        {
-            <li>@flight.FlightNumber - @flight.DepartureTime to @flight.ArrivalTime</li>
-        }
-    </ul>
-}
-else
-{
-    <p>No matching flights found.</p>
-}
 
 <h3>Reserve</h3>
 
-
-<div class="Reserve">
+<div class="Reserve" style="display: flex; flex-direction: column; margin-bottom: 10px;">
     <label for="FlightCode">Flight code:</label>
-    <input type="text" id="FlightCode" @bind="FlightCode" placeholder="Flight" />
+    <input placeholder="@flightCode" />
 </div>
 
-<div class="Reserve">
+<div class="Reserve" style="display: flex; flex-direction: column; margin-bottom: 10px;">
     <label for="Airline">Airline:</label>
-    <input type="text" id="Airline" @bind="Airline" placeholder="Airline" />
+    <input placeholder="@airline" />
 </div>
 
 
-<div class="Reserve">
+<div class="Reserve" style="display: flex; flex-direction: column; margin-bottom: 10px;">
     <label for="Day">Day:</label>
-    <input type="text" id="Day" @bind="Day" placeholder="Day" />
+    <input placeholder="@Day" />
 </div>
 
 
-<div class="Reserve">
+<div class="Reserve" style="display: flex; flex-direction: column; margin-bottom: 10px;">
     <label for="Time">Time:</label>
-    <input type="text" id="Time" @bind="Time" placeholder="Time" />
+    <input placeholder="@Time" />
 </div>
 
 
-<div class="Reserve">
+<div class="Reserve" style="display: flex; flex-direction: column; margin-bottom: 10px;">
     <label for="Cost">Cost:</label>
-    <input type="text" id="Cost" @bind="Cost" placeholder="0" />
+    <input placeholder="@Cost" />
 </div>
 
 
-<div class="Reserve">
+<div class="Reserve" style="display: flex; flex-direction: column; margin-bottom: 10px;">
     <label for="Name">Name:</label>
-    <input type="text" id="Name" @bind="Name" placeholder="Name" />
+    <input type="text" placeholder="Name">
+
 </div>
 
 
-<div class="Reserve">
+<div class="Reserve" style="display: flex; flex-direction: column; margin-bottom: 10px;">
     <label for="Citizenship">Citizenship:</label>
-    <input type="text" id="Citizenship" @bind="Citizenship" placeholder="Citizenship" />
+    <input type="text" placeholder="Citizenship" />
 </div>
 
-@code {
-    private string Citizenship { get; set; }
-}
+<button type="button" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Reserve</button>
 
-<button @onclick="Reserve">Reserve</button>
-
-
-@if (flights != null && flights.Count > 0)
-{
-    <h4>Matching Flights:</h4>
-    <ul>
-        @foreach (var flight in flights)
-        {
-            <li>@flight.FlightNumber - @flight.DepartureTime to @flight.ArrivalTime</li>
-        }
-    </ul>
-}
-else
-{
-    <p>No matching flights found.</p>
-}
 
 <h3>Search</h3>
 
-
-
-<div class="Search">
-    <label for="Code">Code:</label>
-    <input type="text" id="Code" @bind="Code" />
+<div style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 10px;">
+    <div style="flex: 1;"></div>
 </div>
-
-<div class="Search">
-    <label for="Airline">Airline:</label>
-    <input type="text" id="Airline" @bind="Airline" />
+<div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <label for="code" style="margin-bottom: 5px;">Citizenship:</label>
+    <input type="text" name="Citizenship" id="citizenship" style="width: 100%; padding: 5px;">
 </div>
-
-<div class="Search">
-    <label for="Name">Name:</label>
-    <input type="text" id="Name" @bind="Name" />
+<div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <label for="airline" style="margin-bottom: 5px;">Airline:</label>
+    <input name="Airline" id="airline" style="width: 100%; padding: 5px;">
 </div>
 
 
+<div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <label for="name" style="margin-bottom: 5px;">Name:</label>
+    <input type="text" name="Name" id="name" style="width: 100%; padding: 5px;">
+</div>
+
+<h3 style="text-align:center; margin-bottom: 20px;">Reservations</h3>
 
 
-@code {
-    private originairport {get; set;}
-}
+<div class="found_flight" style="display: flex; flex-direction: column; margin-bottom: 10px;">
+    <select @bind="SelectedOption">
+        <option>Select</option>
+        @foreach (var flight in flightsList)
+        {
+            <option value="@flight">@flight</option>
+        }
+    </select>
+</div>
 
 
 
- /* //private string originAirport;
-    //private string destinationAirport;
-    //private string dayOfWeek;
-    //private List<Flight> flights;
 
-    //private void FindFlights()
-    //{
-    // Call the findFlights method here with the input parameters
-    // Example:
-    // flights = findFlights(originAirport, destinationAirport, dayOfWeek);
-    // Note: You'll need to replace 'findFlights' with the actual method call or API request in your code
-    //}
-
-    public class Flight
-    {
-        // public string FlightNumber { get; set; }
-        // public string DepartureTime { get; set; }
-        // public string ArrivalTime { get; set; }
-    } */
-    

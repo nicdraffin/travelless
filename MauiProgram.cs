@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using travelless.Components.Data;
 
 namespace travelless
 {
@@ -22,6 +23,12 @@ namespace travelless
 #endif
 
             return builder.Build();
+        }
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            // ... other services ...
+
+            services.AddSingleton<FlightManager>();
         }
     }
 }

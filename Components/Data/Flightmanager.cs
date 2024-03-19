@@ -1,44 +1,43 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.IO;
 
 namespace travelless.Components.Data
 {
     public class FlightManager
     {
-        private string csvFilePath = @"C:\Travelless\Resources\CSV_files\flights.csv";
-        private List<string> searchResults = new List<string>();
+        private string csvFilePath = @"C:\Users\nicdr\OneDrive - Southern Alberta Institute of Technology\SAIT Year 1-2\OOP2\Unit 1\travelless\Resources\CSV_files\flights.csv";
+
+        public List<string> Search(string to, string from, string day)
+        {
+            List<string> flightsList = new List<string>();
 
 
-            public void populateFlight()
+            string[] lines = File.ReadAllLines(csvFilePath);
+
+            foreach (string line in lines)
             {
-                Flights flight;
-                foreach (string line in File.ReadLines(csvFilePath))
+                string[] parts = line.Split(',');
+
+                if (parts.Length >= 7 && parts[2] == to && parts[3] == from && parts[4] == day)
                 {
-                    string[] parts = line.Split(',');
-
-
                     string flightCode = parts[0];
                     string airlineName = parts[1];
                     string fromAirport = parts[2];
                     string toAirport = parts[3];
-                    string day = parts[4];
-                    string deptartureTime = parts[5];
-                    int passengerseatsavaliable = int.Parse(parts[6]);
+                    string dayOfWeek = parts[4];
+                    string departureTime = parts[5];
+                    int passengerSeatsAvailable = int.Parse(parts[6]);
                     double costMoney = Convert.ToDouble(parts[7]);
 
+                    string matchedData = $"{flightCode}, {airlineName}, {fromAirport}, {toAirport}, {dayOfWeek}, {departureTime}, {passengerSeatsAvailable}, {costMoney}";
 
-                    flight = new Flights(flightCode, airlineName, fromAirport, toAirport, day, deptartureTime, passengerseatsavaliable, costMoney);
-                    searchResults.Add(flight);
+                    flightsList.Add(matchedData);
+                    break;
                 }
             }
 
-
+            return flightsList;
         }
-
     }
 }
